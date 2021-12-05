@@ -1,0 +1,440 @@
+{UTF-8}
+Fraccion mortalidad=
+	0.1
+	~	
+	~		|
+
+Mosquitos que estan infectados=
+	Mosquitos que estan incubando
+	~	
+	~		|
+
+Poblacion que esta incubando=
+	(Mosquitos que estan infectados+Poblacion que es vulnerable)/100000
+	~	
+	~		|
+
+Poblacion que esta contagiada=
+	Poblacion que esta incubando
+	~	
+	~		|
+
+Poblacion que es vulnerable=Delay1i(Poblacion que esta incubando,1,20000)
+	~	
+	~		|
+
+Mosquitos que estan incubando=
+	Delay1i(Poblacion que esta contagiada,1,1)
+	~	
+	~		|
+
+Mosquitos que empiezan a incubar=
+	Fraccion poblacion contagiada*Mosquitos que incuban por picadura*Picaduras por mosquito y dia\
+		*MOSQUITOS POTENCIALMENTE PELIGROSOS
+	~	
+	~		|
+
+Poblacion que deja el contagio=
+	POBLACION CONTAGIADA/Peridodo contagio
+	~	
+	~		|
+
+Fraccion poblacion vulnerable=
+	POBLACION VULNERABLE/Poblacion total
+	~	
+	~		|
+
+Mosquitos enfermos muertos=
+	MOSQUITOS INFECTADOS/Periodo mosquito infectado
+	~	
+	~		|
+
+POBLACION INCUBANDO= INTEG (
+	Poblacion infectada-Poblacion que deja de incubar,
+		100)
+	~	
+	~		|
+
+MOSQUITOS INFECTADOS= INTEG (
+	+Mosquitos que dejan de incubar-Mosquitos enfermos muertos,
+		0)
+	~	
+	~		|
+
+POBLACION INMUNE= INTEG (
+	Poblacion que sana,
+		0)
+	~	
+	~		|
+
+Mosquitos que dejan de incubar=
+	MOSQUITOS EN INCUBACION/Periodo incubacion mosquitos
+	~	
+	~		|
+
+Poblacion que deja de incubar=
+	POBLACION INCUBANDO/Periodo incubacion poblacion
+	~	
+	~		|
+
+Periodo incubacion mosquitos=
+	12
+	~	
+	~		|
+
+Poblacion que muere=
+	Fraccion mortalidad*POBLACION ENFERMA/Periodo enfermedad
+	~	
+	~		|
+
+Peridodo contagio=
+	4.5
+	~	
+	~		|
+
+Periodo enfermedad=
+	2.5
+	~	
+	~		|
+
+Poblacion infectada=
+	Fraccion poblacion vulnerable*MOSQUITOS INFECTADOS*Picaduras por mosquito y dia*Tasa de enfermos por picadura
+	~	
+	~		|
+
+Periodo incubacion poblacion=
+	4.5
+	~	
+	~		|
+
+Periodo mosquito infectado=
+	3
+	~	
+	~		|
+
+POBLACION CONTAGIADA= INTEG (
+	Poblacion que deja de incubar-Poblacion que deja el contagio,
+		0)
+	~	
+	~		|
+
+POBLACION VULNERABLE= INTEG (
+	-Poblacion infectada,
+		20000)
+	~	
+	~		|
+
+Tasa de enfermos por picadura=
+	1
+	~	
+	~		|
+
+POBLACION ENFERMA= INTEG (
+	Poblacion que deja el contagio-Poblacion que muere-Poblacion que sana,
+		0)
+	~	
+	~		|
+
+Poblacion que sana=
+	(1-Fraccion mortalidad)*POBLACION ENFERMA/Periodo enfermedad
+	~	
+	~		|
+
+Picaduras por mosquito y dia=
+	0.2
+	~	
+	~		|
+
+Fraccion poblacion contagiada=
+	POBLACION CONTAGIADA/Poblacion total
+	~	
+	~		|
+
+Mosquitos que sanan=
+	MOSQUITOS POTENCIALMENTE PELIGROSOS/Periodo para sanar mosquitos
+	~	
+	~		|
+
+Poblacion mosquitos=
+	500000
+	~	
+	~		|
+
+MOSQUITOS EN INCUBACION= INTEG (
+	+Mosquitos que empiezan a incubar-Mosquitos que dejan de incubar,
+		0)
+	~	
+	~		|
+
+Mosquitos que incuban por picadura=
+	1
+	~	
+	~		|
+
+MOSQUITOS POTENCIALMENTE PELIGROSOS= INTEG (
+	+Variacion mosquitos-Mosquitos que empiezan a incubar-Mosquitos que sanan,
+		0)
+	~	
+	~		|
+
+Variacion mosquitos=
+	Poblacion mosquitos/Vida media mosquitos
+	~	
+	~		|
+
+Vida media mosquitos=
+	18
+	~	
+	~		|
+
+Poblacion total=
+	POBLACION CONTAGIADA+POBLACION ENFERMA+POBLACION INCUBANDO+POBLACION INMUNE+POBLACION VULNERABLE
+	~	
+	~		|
+
+Periodo para sanar mosquitos=
+	3
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 300
+	~	Day
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Day
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 7
+	~	Day
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.5
+	~	Day
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Descripción del caso
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,5,0
+12,1,0,1594,125,401,50,8,135,0,26,-1,0,0,0,-1--1--1,0-0-0,|20|B|0-0-255,0,0,0,0,0,0
+Kjell Kalgraf's published in Goodman's (1983) Study Notes in System Dynamics
+12,2,0,1559,304,335,45,8,135,0,26,-1,0,0,0,-1--1--1,0-0-0,|20|B|0-0-255,0,0,0,0,0,0
+Andrew Ford BWeb for Modeling the Environment
+12,3,0,1577,480,319,82,8,135,0,26,-1,0,0,0,-1--1--1,0-0-0,|20|B|0-0-255,0,0,0,0,0,0
+http://modeling-the-environment.com/
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Descripción del caso_2
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,5,0
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Cómo cursa la enfermedad
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,60,0
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Bucles fundamentales
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,5,0
+10,1,Mosquitos que estan incubando,230,161,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Poblacion que esta contagiada,244,422,60,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Mosquitos que estan infectados,475,209,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,4,2,1,1,0,0,0,0,64,0,-1--1--1,,1|(163,293)|
+1,5,1,3,1,0,0,0,0,64,0,-1--1--1,,1|(380,146)|
+10,6,Poblacion que esta incubando,538,384,60,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,7,Poblacion que es vulnerable,778,481,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,8,3,6,1,0,0,0,0,64,0,-1--1--1,,1|(538,290)|
+1,9,7,6,1,0,0,0,0,64,0,-1--1--1,,1|(745,294)|
+1,10,6,7,1,0,0,0,0,64,0,-1--1--1,,1|(660,549)|
+1,11,6,2,1,0,0,0,0,64,0,-1--1--1,,1|(347,458)|
+12,12,0,424,102,278,42,8,4,0,26,-1,0,0,0,0-0-0,0-0-0,|18|B|255-0-0,0,0,0,0,0,0
+Bucles fundamentales en el modelo Fiebre Amarilla
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Diagrama de Forrester
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,5,0
+10,1,MOSQUITOS POTENCIALMENTE PELIGROSOS,925,177,89,27,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,MOSQUITOS INFECTADOS,1467,183,64,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,POBLACION VULNERABLE,1523,354,66,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,POBLACION INCUBANDO,1592,564,61,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,5,POBLACION ENFERMA,970,552,59,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,6,48,680,179,25,15,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,7,9,1,4,0,0,22,0,0,0,-1--1--1,,1|(802,179)|
+1,8,9,6,100,0,0,22,0,0,0,-1--1--1,,1|(731,179)|
+11,9,48,763,179,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,10,Variacion mosquitos,763,206,33,19,40,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,11,MOSQUITOS EN INCUBACION,1196,178,64,27,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,12,14,11,4,0,0,22,0,0,0,-1--1--1,,1|(1099,194)|
+1,13,14,1,100,0,0,22,0,0,0,-1--1--1,,1|(1034,194)|
+11,14,794,1061,194,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,15,Mosquitos que empiezan a incubar,1061,221,61,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,16,18,2,4,0,0,22,0,0,0,-1--1--1,,1|(1372,180)|
+1,17,18,11,100,0,0,22,0,0,0,-1--1--1,,1|(1295,180)|
+11,18,354,1336,180,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,19,Mosquitos que dejan de incubar,1336,207,67,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,20,48,896,31,25,15,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,21,23,20,4,0,0,22,0,0,0,-1--1--1,,1|(896,59)|
+1,22,23,1,100,0,0,22,0,0,0,-1--1--1,,1|(896,117)|
+11,23,48,896,78,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,24,Mosquitos que sanan,952,78,48,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,25,48,1727,177,25,15,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,26,28,25,4,0,0,22,0,0,0,-1--1--1,,1|(1651,177)|
+1,27,28,2,100,0,0,22,0,0,0,-1--1--1,,1|(1560,177)|
+11,28,48,1595,177,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,29,Mosquitos enfermos muertos,1595,204,57,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,30,Poblacion total,1160,402,62,13,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,31,33,4,4,0,0,22,0,0,0,-1--1--1,,1|(1544,505)|
+1,32,33,3,100,0,0,22,0,0,0,-1--1--1,,1|(1544,414)|
+11,33,574,1544,460,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,34,Poblacion infectada,1584,460,32,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,35,POBLACION CONTAGIADA,1265,555,68,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,36,38,35,4,0,0,22,0,0,0,-1--1--1,,1|(1383,558)|
+1,37,38,4,100,0,0,22,0,0,0,-1--1--1,,1|(1488,558)|
+11,38,486,1440,558,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,39,Poblacion que deja de incubar,1440,585,61,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,40,42,5,4,0,0,22,0,0,0,-1--1--1,,1|(1070,561)|
+1,41,42,35,100,0,0,22,0,0,0,-1--1--1,,1|(1160,561)|
+11,42,706,1118,561,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,43,Poblacion que deja el contagio,1118,589,79,20,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,44,POBLACION INMUNE,731,561,59,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,45,47,44,4,0,0,22,0,0,0,-1--1--1,,1|(812,567)|
+1,46,47,5,100,0,0,22,0,0,0,-1--1--1,,1|(878,567)|
+11,47,750,840,567,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,48,Poblacion que sana,840,594,46,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,49,44,30,1,0,0,0,0,64,0,-1--1--1,,1|(939,458)|
+1,50,5,30,1,0,0,0,0,64,0,-1--1--1,,1|(1066,490)|
+1,51,35,30,1,0,0,0,0,64,0,-1--1--1,,1|(1237,458)|
+1,52,4,30,0,0,0,0,0,64,0,-1--1--1,,1|(1373,481)|
+1,53,3,30,1,0,0,0,0,64,0,-1--1--1,,1|(1353,420)|
+10,54,Fraccion poblacion contagiada,1120,301,46,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,55,35,54,1,0,0,0,0,64,0,-1--1--1,,1|(1135,471)|
+1,56,30,54,0,0,0,0,0,64,0,-1--1--1,,1|(1145,364)|
+10,57,Fraccion poblacion vulnerable,1358,304,43,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,58,30,57,0,0,0,0,0,64,0,-1--1--1,,1|(1244,360)|
+1,59,3,57,0,0,0,0,0,64,0,-1--1--1,,1|(1435,327)|
+1,60,57,33,1,0,0,0,0,64,0,-1--1--1,,1|(1411,435)|
+1,61,54,15,0,0,0,0,0,64,0,-1--1--1,,1|(1092,262)|
+10,62,Poblacion mosquitos,695,306,45,20,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,63,Vida media mosquitos,830,295,48,20,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,64,62,10,0,0,0,0,0,64,0,-1--1--1,,1|(725,261)|
+1,65,63,10,0,0,0,0,0,64,0,-1--1--1,,1|(800,255)|
+10,66,Picaduras por mosquito y dia,1213,286,61,20,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,67,66,14,1,0,0,0,0,64,0,-1--1--1,,1|(1146,242)|
+10,68,Mosquitos que incuban por picadura,1101,119,62,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,69,68,14,0,0,0,0,0,64,0,-1--1--1,,1|(1078,160)|
+10,70,Periodo incubacion mosquitos,1461,114,46,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,71,70,18,0,0,0,0,0,64,0,-1--1--1,,1|(1384,154)|
+1,72,2,34,1,0,0,0,0,64,0,-1--1--1,,1|(1555,305)|
+1,73,2,29,1,0,0,0,0,64,0,-1--1--1,,1|(1521,214)|
+10,74,Periodo mosquito infectado,1672,311,41,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,75,74,29,0,0,0,0,0,64,0,-1--1--1,,1|(1634,259)|
+10,76,Periodo para sanar mosquitos,743,72,54,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,77,76,23,0,0,0,0,0,64,0,-1--1--1,,1|(835,75)|
+10,78,Tasa de enfermos por picadura,1747,453,56,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,79,78,34,0,0,0,0,0,64,0,-1--1--1,,1|(1660,456)|
+10,80,Periodo incubacion poblacion,1347,660,46,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,81,4,39,1,0,0,0,0,64,0,-1--1--1,,1|(1552,609)|
+1,82,80,39,0,0,0,0,0,64,0,-1--1--1,,1|(1392,622)|
+10,83,Peridodo contagio,1137,694,40,20,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,84,83,43,0,0,0,0,0,64,0,-1--1--1,,1|(1128,648)|
+1,85,35,43,1,0,0,0,0,64,0,-1--1--1,,1|(1245,596)|
+12,86,48,944,706,25,15,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,87,89,86,4,0,0,22,0,0,0,-1--1--1,,1|(944,665)|
+1,88,89,5,100,0,0,22,0,0,0,-1--1--1,,1|(944,599)|
+11,89,48,944,633,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,90,Poblacion que muere,998,633,46,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,91,5,90,1,0,0,0,0,64,0,-1--1--1,,1|(970,587)|
+1,92,5,48,1,0,0,0,0,64,0,-1--1--1,,1|(938,616)|
+10,93,Periodo enfermedad,717,662,49,20,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,94,Fraccion mortalidad,828,702,45,20,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,95,94,48,0,0,0,0,0,64,0,-1--1--1,,1|(832,654)|
+1,96,94,89,0,0,0,0,0,64,0,-1--1--1,,1|(892,663)|
+1,97,93,48,0,0,0,0,0,64,0,-1--1--1,,1|(772,630)|
+1,98,93,89,1,0,0,0,0,64,0,-1--1--1,,1|(882,751)|
+1,99,1,24,0,0,0,0,0,64,0,-1--1--1,,1|(937,130)|
+1,100,66,34,1,0,0,0,0,64,0,-1--1--1,,1|(1358,417)|
+1,101,11,19,1,0,0,0,0,64,0,-1--1--1,,1|(1327,221)|
+1,102,1,14,1,0,0,0,0,64,0,-1--1--1,,1|(991,145)|
+12,103,0,377,237,198,148,3,44,0,0,1,0,0,0,0,0,0,0,0,0
+Poblacion_enferma
+12,104,0,380,543,199,147,3,44,0,0,1,0,0,0,0,0,0,0,0,0
+Plano_de_fase
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Cuadro de mando
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,5,0
+10,1,Fraccion mortalidad,358,100,60,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Verdana|12|B|0-0-0,0,0,0,0,0,0
+10,2,Fraccion poblacion contagiada,628,203,61,19,8,3,1,0,-1,0,0,0,0,0,0,0,0,0
+10,3,POBLACION CONTAGIADA,626,117,40,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,4,3,2,0,1,0,0,0,0,0,-1--1--1,,1|(626,153)|
+10,5,Poblacion total,611,289,56,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,6,5,2,0,1,0,0,0,0,0,-1--1--1,,1|(617,256)|
+10,7,Fraccion poblacion vulnerable,644,389,61,19,8,3,1,0,-1,0,0,0,0,0,0,0,0,0
+10,8,Poblacion total,540,334,56,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,9,8,7,0,1,0,0,0,0,0,-1--1--1,,1|(577,354)|
+10,10,POBLACION VULNERABLE,664,471,37,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,11,10,7,0,1,0,0,0,0,0,-1--1--1,,1|(655,436)|
+10,12,Peridodo contagio,358,191,42,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Verdana|12|B|0-0-0,0,0,0,0,0,0
+10,13,Periodo enfermedad,363,262,57,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Verdana|12|B|0-0-0,0,0,0,0,0,0
+10,14,Periodo incubacion poblacion,365,342,49,27,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Verdana|12|B|0-0-0,0,0,0,0,0,0
+10,15,POBLACION ENFERMA,873,282,45,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Verdana|12|B|0-0-0,0,0,0,0,0,0
+10,16,Poblacion que deja el contagio,1027,258,66,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,17,16,15,0,1,0,0,0,0,0,-1--1--1,,1|(946,270)|
+10,18,Poblacion que muere,865,164,57,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Verdana|12|B|128-128-128,0,0,0,0,0,0
+1,19,18,15,0,1,0,0,0,0,0,-1--1--1,,1|(868,216)|
+10,20,Poblacion que sana,872,433,52,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Verdana|12|B|128-128-128,0,0,0,0,0,0
+1,21,20,15,0,1,0,0,0,0,0,-1--1--1,,1|(872,364)|
+12,22,0,357,28,48,14,8,4,0,26,-1,0,0,0,0-0-0,0-0-0,|18|B|255-0-0,0,0,0,0,0,0
+Palancas
+12,23,0,866,60,44,14,8,4,0,26,-1,0,0,0,0-0-0,0-0-0,|18|B|0-0-255,0,0,0,0,0,0
+Outputs
+10,24,Picaduras por mosquito y dia,366,435,67,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Verdana|12|B|0-0-0,0,0,0,0,0,0
+///---\\\
+:GRAPH Plano_de_fase
+:TITLE Plano de fase
+:X-AXIS Mosquitos infectados
+:SCALE
+:VAR Poblacion enferma
+
+:GRAPH Poblacion_enferma
+:TITLE Poblacion enferma
+:SCALE
+:VAR Poblacion enferma
+:L<%^E!@
+1:C:\Users\Hp\Downloads\mosquitos5.vdfx
+4:Time
+5:Picaduras por mosquito y dia
+9:mosquitos5
+19:5,4
+24:0
+25:294
+26:294
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:0
+72:0
+73:0
+95:0
+96:0
+97:0
+77:0
+78:0
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
